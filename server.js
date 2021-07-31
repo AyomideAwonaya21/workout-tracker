@@ -13,11 +13,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
+
+try {
+  mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useNewUrlParser: true,
   useFindAndModify: false
 });
 
+}catch(error){
+  console.log(error)
+}
 app.use(htmlRoutes);
 app.use(apiRoutes);
 app.listen(PORT, () => {
